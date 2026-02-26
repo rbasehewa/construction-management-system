@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="TestShelfordBuildPro.API/TestShelfordBuildPro.API.csproj" Id="62d71ece-8bab-4f56-829f-10d45eb4363a" />
+    <Project Path="TestShelfordBuildPro.Application/TestShelfordBuildPro.Application.csproj" />
+    <Project Path="TestShelfordBuildPro.Domain/TestShelfordBuildPro.Domain.csproj" />
+    <Project Path="TestShelfordBuildPro.Infrastructure/TestShelfordBuildPro.Infrastructure.csproj" />
+  </Folder>
+</Solution>
