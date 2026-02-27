@@ -10,8 +10,6 @@
     <Folder Include="Aggregates\" />
     <Folder Include="Entities\" />
     <Folder Include="Events\" />
-    <Folder Include="Enumerations\" />
-    <Folder Include="ValueObjects\" />
   </ItemGroup>
 
 </Project>
