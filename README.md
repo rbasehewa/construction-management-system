@@ -1,4 +1,4 @@
-# 🏗️ ShelfordBuildPro — Construction Management System
+# 🏗️ TestShelfordBuildPro — Construction Management System
 
 A .NET 10 Web API built with **Clean Architecture** and **Domain-Driven Design (DDD)** principles, modelled around the real-world operations of a Perth-based construction company managing both commercial and residential building projects.
 
@@ -35,8 +35,8 @@ It handles two types of projects:
 
 | Division | Type | Examples |
 |---|---|---|
-| **Shelford Constructions** | Commercial | Warehouses, offices, defence, retail, healthcare |
-| **Shelford Quality Homes** | Residential | Custom homes, display homes, first home buyers |
+| **TestShelford Constructions** | Commercial | Warehouses, offices, defence, retail, healthcare |
+| **TestShelford Quality Homes** | Residential | Custom homes, display homes, first home buyers |
 
 ---
 
@@ -75,7 +75,7 @@ Each layer can only talk to the layer **inside** it — never outward.
 ## Solution Structure
 
 ```
-ShelfordBuildPro.sln
+TestShelfordBuildPro.sln
 └── src/
     ├── TestShelfordBuildPro.Domain/          🔴 Business rules
     │   ├── Common/
@@ -130,11 +130,11 @@ Like dropdown menus in a form — the options are predefined and cannot be missp
 
 | File | What it does | Business purpose |
 |---|---|---|
-| `ProjectType.cs` | Commercial, Residential, Civil, Government, Renovation | Which Shelford division handles this project? |
+| `ProjectType.cs` | Commercial, Residential, Civil, Government, Renovation | Which TestShelford division handles this project? |
 | `ProjectStatus.cs` | Enquiry → Quoting → ContractSigned → InProgress → Complete | Where is this project in its lifecycle right now? |
 | `CommercialSector.cs` | Warehouse, Defence, Retail, Healthcare, Education... | What industry is this commercial build for? |
-| `HomeType.cs` | SingleStorey, DoubleStorey, CustomLuxury, DisplayHome... | What type of home is Shelford Quality Homes building? |
-| `ContractType.cs` | LumpSum, CostPlus, DesignBuild, ManagementFee | How is Shelford being paid for this project? |
+| `HomeType.cs` | SingleStorey, DoubleStorey, CustomLuxury, DisplayHome... | What type of home is TestShelford Quality Homes building? |
+| `ContractType.cs` | LumpSum, CostPlus, DesignBuild, ManagementFee | How is TestShelford being paid for this project? |
 | `ConstructionType.cs` | BrickAndSteel, PrecastTiltUp, Formwork, SteelFrame... | What building technique is being used on site? |
 
 **Why not just use strings?**
@@ -196,7 +196,7 @@ A Milestone only makes sense in the context of a project. A Variation Order only
 |---|---|---|
 | `ProjectMilestone.cs` | A key build stage with due date and completion | Slab, Frame, Lock-Up, Fixing, Practical Completion — gates progress claims and inspections |
 | `VariationOrder.cs` | A formal change to original scope | Client adds mezzanine floor mid-build = VO-001, +$150k. Must be approved before work proceeds |
-| `ProgressClaim.cs` | An invoice based on % completion | Shelford claims payment at each milestone — 20% slab = $1M claim, less 5% retention = $950k paid |
+| `ProgressClaim.cs` | An invoice based on % completion | TestShelford claims payment at each milestone — 20% slab = $1M claim, less 5% retention = $950k paid |
 
 **Why can't you create these directly?**
 ```csharp
@@ -212,7 +212,7 @@ var milestone = project.AddMilestone("Frame Stage", dueDate, "ryan.m");
 
 ### 📁 Aggregates
 
-**Business meaning:** The main "things" Shelford cares about — the managers of the system.
+**Business meaning:** The main "things" TestShelford cares about — the managers of the system.
 An Aggregate Root is the ONLY way to interact with its children.
 You never directly modify a Milestone — you always go through its Project.
 
@@ -221,9 +221,9 @@ You never directly modify a Milestone — you always go through its Project.
 | File | What it does | Business purpose |
 |---|---|---|
 | `Project.cs` | Abstract base — all shared project behaviour | Holds contract financials, status lifecycle, collections of milestones/variations/claims. Enforces ALL core business rules |
-| `CommercialProject.cs` | Shelford Constructions division | Adds: sector, GFA, storeys, DA/permit tracking, performance bonds. Used for warehouses, defence, retail, industrial |
-| `ResidentialProject.cs` | Shelford Quality Homes division | Adds: home type, bedrooms/bathrooms, pre-start meeting, HIA contract, lifetime warranty. Used for all home builds |
-| `Client.cs` | Anyone who commissions Shelford | Stores legal name, ABN, billing address, contact, credit limit. One client can have many projects |
+| `CommercialProject.cs` | TestShelford Constructions division | Adds: sector, GFA, storeys, DA/permit tracking, performance bonds. Used for warehouses, defence, retail, industrial |
+| `ResidentialProject.cs` | TestShelford Quality Homes division | Adds: home type, bedrooms/bathrooms, pre-start meeting, HIA contract, lifetime warranty. Used for all home builds |
+| `Client.cs` | Anyone who commissions TestShelford | Stores legal name, ABN, billing address, contact, credit limit. One client can have many projects |
 
 **The Aggregate enforces all business rules:**
 ```csharp
@@ -241,8 +241,8 @@ project.AdvanceStatus(ProjectStatus.Complete, "ryan.m");
 var project = new Project(...);
 
 // ✅ You must use a concrete type
-var commercial   = CommercialProject.Create(...);  // Shelford Constructions
-var residential  = ResidentialProject.Create(...); // Shelford Quality Homes
+var commercial   = CommercialProject.Create(...);  // TestShelford Constructions
+var residential  = ResidentialProject.Create(...); // TestShelford Quality Homes
 ```
 
 ---
